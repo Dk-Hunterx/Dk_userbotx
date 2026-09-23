@@ -1,23 +1,31 @@
-name: Dk_userbotx CI
+name: Run Dk_userbotx
 
 on:
   workflow_dispatch:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
 
 jobs:
-  build:
+  run-bot:
     runs-on: ubuntu-latest
+    timeout-minutes: 350
+
+    env:
+      API_ID: ${{ secrets.API_ID }}
+      API_HASH: ${{ secrets.API_HASH }}
+      BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+      MONGO_URL: ${{ secrets.MONGO_URL }}
+      OWNER_ID: ${{ secrets.OWNER_ID }}
+      OWNER_USERNAME: ${{ secrets.OWNER_USERNAME }}
+      FSUB_CHANNELS: ${{ secrets.FSUB_CHANNELS }}
+      PYTHONUNBUFFERED: "1"
 
     steps:
-      - name: Checkout repository
+      - name: Download repository
         uses: actions/checkout@v4
 
-      - name: Set up Python
+      - name: Install Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
@@ -27,11 +35,5 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Syntax check
-        run: python -m py_compile main.py
-
-      - name: Check required files
-        run: |
-          test -f main.py
-          test -f requirements.txt
-          test -f Procfile
+      - name: Start bot
+        run: python main.py

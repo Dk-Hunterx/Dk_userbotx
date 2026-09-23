@@ -105,9 +105,9 @@ main_buttons = InlineKeyboardMarkup([
     [
         InlineKeyboardButton(
             "👑 OWNER",
-            url=f"https://t.me/{OWNER_USERNAME.replace('@','') or 'CoderNova'}",
+            url=f"https://t.me/{OWNER_USERNAME.replace('@','') or 'Dk_x_Hunter'}",
         ),
-        InlineKeyboardButton("📢 UPDATE", url="https://t.me/NovaBot_Support"),
+        InlineKeyboardButton("📢 UPDATE", url="https://t.me/Dk_Bot0"),
     ],
     [InlineKeyboardButton("❌ CLOSE", callback_data="close")],
 ])

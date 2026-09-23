@@ -334,7 +334,11 @@ def register_ubot_handlers(ubot):
     ubot.add_handler(handlers.MessageHandler(raid_cmd, filters.command("raid", ".") & filters.me))
     ubot.add_handler(handlers.MessageHandler(clone_cmd, filters.command("clone", ".") & filters.me))
     ubot.add_handler(handlers.MessageHandler(stop_cmd, filters.command("stop", ".") & filters.me))
-    ubot.add_handler(handlers.MessageHandler(pm_guard_handler, filters.private & ~filters.me, group=2))
+
+    ubot.add_handler(
+    handlers.MessageHandler(pm_guard_handler, filters.private & ~filters.me),
+    group=2
+)
 
 START_TEXT = (
     "⚡ **Welcome to Dk_userbotx** ⚡\n\n"

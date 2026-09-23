@@ -19,18 +19,24 @@ from pyrogram.raw import types
 
 BOT_START_TIME = time.time()
 
-# --- CONFIGURATION ---
-API_ID = 31980984
-API_HASH = "a61358dd3cd8c3a56cd53d9ddd8a0c67"
-BOT_TOKEN = "8709782891:AAHhT65venvu-KbJO8Q7zJoBcMXNdrj7deo"
-LOG_GROUP = -1003867805165 
-MONGO_URL = "mongodb+srv://misssqn_db_user:Nova01@cluster0.6xxsrwq.mongodb.net/?retryWrites=true&w=majority"
 
-FSUB_CHANNELS = ["NovaBot_Support", "Friend_Forevrrr", "Villain_Loves", "SticrAura"]
-START_VIDEO = "https://files.catbox.moe/pnaxj0.mp4"
-ALIVE_IMG = "https://graph.org/file/422440e09d466500f2c93-953253772b0d8d2bfc.jpg"
-OWNER_ID = 8724182918
-OWNER_USERNAME = "@CoderNova"
+
+# --- CONFIGURATION ---
+API_ID = int(os.getenv("API_ID", "0"))
+API_HASH = os.getenv("API_HASH", "")
+BOT_TOKEN = os.getenv("BOT_TOKEN", "")
+
+LOG_GROUP = int(os.getenv("LOG_GROUP", "0"))
+MONGO_URL = os.getenv("MONGO_URL", "")
+
+FSUB_CHANNELS = [
+    x.strip()
+    for x in os.getenv("FSUB_CHANNELS", "").split(",")
+    if x.strip()
+]
+
+OWNER_ID = int(os.getenv("OWNER_ID", "0"))
+OWNER_USERNAME = os.getenv("OWNER_USERNAME", "")
 
 # --- DATABASE CORE ---
 try:

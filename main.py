@@ -33,8 +33,8 @@ LOG_GROUP = env_int("LOG_GROUP")
 MONGO_URL = os.getenv("MONGO_URL", "").strip()
 OWNER_ID = env_int("OWNER_ID")
 OWNER_USERNAME = os.getenv("OWNER_USERNAME", "").strip()
-START_VIDEO = os.getenv("START_VIDEO", "").strip()
-ALIVE_IMG = os.getenv("ALIVE_IMG", "").strip()
+START_VIDEO = ""
+ALIVE_IMG = ""
 
 FSUB_CHANNELS = [
     x.strip() for x in os.getenv("FSUB_CHANNELS", "").split(",") if x.strip()
@@ -149,17 +149,15 @@ async def alive_cmd(c, m):
         "✨ **Dk_userbotx IS ALIVE** ✨\n\n"
         f"⏳ **Uptime:** `{uptime}`\n"
         f"👤 **User:** {c.me.mention}\n"
-        f"👑 **Owner:** {OWNER_USERNAME or 'Not set'}"
+        f"👑 **Owner:** {OWNER_USERNAME or 'Not set'}\n\n"
+        "✨ **I am alive** ✨"
     )
     try:
         await m.delete()
     except Exception:
         pass
     try:
-        if ALIVE_IMG:
-            await c.send_photo(m.chat.id, ALIVE_IMG, caption=text)
-        else:
-            await c.send_message(m.chat.id, text)
+        await c.send_message(m.chat.id, text)
     except Exception:
         pass
 
@@ -306,7 +304,6 @@ async def pm_guard_handler(c, m):
     if m.from_user.is_bot or m.from_user.id == c.me.id or m.from_user.id == OWNER_ID:
         return
 
-    # Only run the guard when the API exposes contact status.
     if getattr(m.from_user, "is_contact", False):
         return
 
@@ -341,7 +338,8 @@ def register_ubot_handlers(ubot):
 
 START_TEXT = (
     "⚡ **Welcome to Dk_userbotx** ⚡\n\n"
-    "Hey {mention}, use the buttons below to manage your userbot."
+    "Hey {mention}, use the buttons below to manage your userbot.\n\n"
+    "✨ **I am alive** ✨"
 )
 
 @bot.on_message(filters.command("start") & filters.private)
@@ -359,11 +357,6 @@ async def start_handler(c, m):
         )
 
     text = START_TEXT.format(mention=m.from_user.mention)
-    if START_VIDEO:
-        try:
-            return await m.reply_video(START_VIDEO, caption=text, reply_markup=main_buttons)
-        except Exception:
-            pass
     await m.reply_text(text, reply_markup=main_buttons)
 
 @bot.on_message(filters.command("broadcast") & filters.user(OWNER_ID))
